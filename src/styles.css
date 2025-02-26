@@ -43,6 +43,7 @@ h1 {
 /* My classes */
 .main-container {
   display: flex;
+  min-height: 95vh;
 }
 
 .left-panel {

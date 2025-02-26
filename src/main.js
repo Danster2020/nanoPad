@@ -32,15 +32,26 @@ const callback = (mutationList, observer) => {
   contentChanged()
 };
 
+function onMainContainerClick() {
+  console.log("click");
+
+  text_area_el.focus()
+}
+
 
 function main() {
   const config = { attributes: true, childList: true, subtree: true, characterData: true };
   const text_area_observer = new MutationObserver(callback);
   text_area_observer.observe(text_area_el, config);
 
+  document.getElementById("main_container").addEventListener("click", onMainContainerClick);
+
+
   // run once on startup
   setTextRows()
+  text_area_el.focus()
 }
+
 
 main()
 
