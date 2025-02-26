@@ -9,13 +9,24 @@ async function setTextRows() {
 
   const el_height = getElementHeight(text_area_el);
   console.log("el_height", el_height);
-  
+
   const el_text = await invoke("calc_text_rows", { height: el_height })
   console.log("test:", el_text);
   line_rows_el.textContent = el_text;
 }
 
 text_area_el.addEventListener('DOMSubtreeModified', contentChanged, false);
+
+// Callback function to execute when mutations are observed
+const callback = (mutationList, observer) => {
+  contentChanged()
+};
+
+const config = { attributes: true, childList: true, subtree: true };
+const observer = new MutationObserver(callback);
+observer.observe(text_area_el, config);
+
+
 
 function contentChanged() {
   setTextRows()
