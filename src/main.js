@@ -1,4 +1,7 @@
 const { invoke } = window.__TAURI__.core;
+// const { open } = window.__TAURI__.dialog;
+const { save } = window.__TAURI__.dialog;
+const { Menu } = window.__TAURI__.menu;
 
 const line_rows_el = document.getElementById("line_rows")
 const text_area_el = document.getElementById('text_area');
@@ -39,6 +42,41 @@ function onMainContainerClick() {
 }
 
 
+async function saveFile() {
+  // const filePath = await save({
+  //   filters: [
+  //     {
+  //       name: 'My Filter',
+  //       extensions: ['txt', 'png', 'jpeg'],
+  //     },
+  //   ],
+  // });
+  // console.log('File path:', filePath);
+
+  // const file = await create('bar.txt', { baseDir: "Downloads" });
+  // await file.write(new TextEncoder().encode('Hello world'));
+  // await file.close();
+}
+
+const menu = await Menu.new({
+  items: [
+    {
+      id: 'save',
+      text: 'Save',
+      action: () => {
+        console.log('save pressed');
+        saveFile()
+      },
+    },
+  ],
+});
+
+// If a window was not created with an explicit menu or had one set explicitly,
+// this menu will be assigned to it.
+menu.setAsAppMenu().then((res) => {
+  console.log('menu set success', res);
+});
+
 function main() {
   const config = { attributes: true, childList: true, subtree: true, characterData: true };
   const text_area_observer = new MutationObserver(callback);
@@ -50,7 +88,11 @@ function main() {
   // run once on startup
   setTextRows()
   text_area_el.focus()
+
+
 }
+
+
 
 
 main()

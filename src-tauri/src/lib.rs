@@ -1,4 +1,3 @@
-
 // fn count_newlines(s: &str) -> usize {
 //     s.as_bytes().iter().filter(|&&c| c == b'\n').count() + 1
 // }
@@ -28,11 +27,10 @@ fn calc_text_rows(height: i32) -> String {
 //     return rows_text;
 // }
 
-
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![greet])
         .invoke_handler(tauri::generate_handler![calc_text_rows])
